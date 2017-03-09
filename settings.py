@@ -1,7 +1,12 @@
 #settings.py
+#define global variables
 def init():
 
+    global inputlocation
     global lat
     global lon
+    global state
     global year
-    global info
+    global weather
+    global politics
+    

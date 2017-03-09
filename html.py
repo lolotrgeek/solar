@@ -1,15 +1,17 @@
 #html.py
-#generate html UI, parse inputs
+#Web UI layer
 
-#inject dependencies
+#load dependencies
 from BaseHTTPServer import BaseHTTPRequestHandler, HTTPServer
 import cgi
-import geocoder
 
+#load layers
 import settings
-import data
+import present
 
+#Server Details
 class Handler(BaseHTTPRequestHandler):
+    #Generate HTML
     def do_GET(self):
         self.send_response(200)
         self.end_headers()
@@ -26,7 +28,7 @@ class Handler(BaseHTTPRequestHandler):
             </html>
             """)
         return
-
+    #Parse Response
     def do_POST(self):
         form = cgi.FieldStorage(
             fp=self.rfile, 
@@ -34,23 +36,25 @@ class Handler(BaseHTTPRequestHandler):
             environ={'REQUEST_METHOD':'POST',
                      'CONTENT_TYPE':self.headers['Content-Type'],
                      })
+        #user input
         inputlocation = form.getvalue("location")
+        
+        settings.inputlocation = inputlocation
 		
-        g = geocoder.google(inputlocation)
-        settings.lat = g.lat
-        settings.lon = g.lng		
-		
-		
-		
+        #inject presentation layer
+        present.init()
+        
+		#Display inputlocation
         self.wfile.write(inputlocation)
         self.wfile.write(settings.lat)
         self.wfile.write(settings.lon)
-		
-		#inject data layer
-        data.init()
-		
-        self.wfile.write(settings.info)		
+        self.wfile.write(settings.state)
+        
+		#Display Data
+        self.wfile.write(settings.weather)  
+        self.wfile.write(settings.politics)
         return
-	
+ 
+#Create Server and run	
 server = HTTPServer(('', 8181), Handler)
 server.serve_forever()
