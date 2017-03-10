@@ -73,15 +73,42 @@ def init():
     
     
     # --------------------------------------------------------------------------------------------------------------------------------
-    # ECONOMIC DATA - Genability - http://developer.genability.com/documentation/quickstart/
+    # ECONOMIC DATA - EIA - https://www.eia.gov/opendata/commands.php
     # --------------------------------------------------------------------------------------------------------------------------------
-
-    #Load Serving Entities (lses)
-    lses = "https://api.genability.com/rest/public/lses?zipCode={postal}".format(postal=postal)
     
-    #auth = app_id, app_key
-    e = requests.get(lses, auth=("e2e2df06-6e87-43ab-b79e-30ca9a0aacdf" , "a074b728-a09e-436d-96b1-45e6bada965c"))
+    eia_key = 'afe0bc288e7de03842e061ac596b9301'
+    
+    #series IDs found from data browser - https://www.eia.gov/electricity/data/browser/
+    #timeline
+    monthly = 'M'
+    quarterly = 'Q'
+    yearly = 'Y'
+    
+    timeline = monthly
+    
+    #sector
+    all = 'ALL'
+    residential = 'RES'
+    commercial = 'COM'
+    Industrial = 'IND'
+    transportation = 'TRA'
+    other = 'OTH'   
+    
+    sector = residential
+    
+    #dataset
+    avg_price = 'ELEC.PRICE'
+    avg_rev = 'ELEC.REV'
+    
+    dataset = avg_price
 
+    #generate series ID
+    series_id = '{dataset}.{state}-{sector}.{timeline}'.format(dataset=dataset, state=state, sector=sector, timeline=timeline)
+    
+    eia = 'http://api.eia.gov/series/?api_key={eia_key}&series_id={series_id}'.format(eia_key=eia_key, series_id=series_id)
+    
+    #request
+    e = requests.get(eia)
     settings.economics = e.text
     
     return

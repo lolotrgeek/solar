@@ -1,5 +1,4 @@
 #Present data
-#Tasks required to present and load data
 
 #load dependencies
 import geocoder
