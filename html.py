@@ -45,14 +45,17 @@ class Handler(BaseHTTPRequestHandler):
         present.init()
         
 		#Display inputlocation
-        self.wfile.write(inputlocation)
+        self.wfile.write("<p><" inputlocation)
         self.wfile.write(settings.lat)
         self.wfile.write(settings.lon)
         self.wfile.write(settings.state)
+        self.wfile.write(settings.postal)
         
 		#Display Data
         self.wfile.write(settings.weather)  
         self.wfile.write(settings.politics)
+        self.wfile.write(settings.economics)
+        
         return
  
 #Create Server and run	

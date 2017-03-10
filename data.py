@@ -17,11 +17,12 @@ def init():
     lat = settings.lat
     lon = settings.lon
     state = settings.state
+    postal = settings.postal
     #year = settings.year
     
-    # ----------------------------------------------------------------
+    # --------------------------------------------------------------------------------------------------------------------------------
     # WEATHER DATA - NSRDB  - https://nsrdb.nrel.gov/api-instructions
-    
+    # --------------------------------------------------------------------------------------------------------------------------------
     # Declare all variables as strings. Spaces must be replaced with '+', i.e., change 'John Smith' to 'John+Smith'.
 
     # You must request an NSRDB api key from the link above
@@ -57,11 +58,10 @@ def init():
     timezone, elevation = weather['Local Time Zone'], weather['Elevation']
     
     settings.weather = weather
-    # END WEATHER DATA
         
-    # ----------------------------------------------------------------
-
+    # --------------------------------------------------------------------------------------------------------------------------------
     # POLITICAL DATA - DSIRE - http://www.dsireusa.org/resources/data-and-tools/
+    # --------------------------------------------------------------------------------------------------------------------------------
 
     dsire = 'http://programs.dsireusa.org/api/v1/getprograms/json?fromSir=0&state={state}'.format(state=state)
     
@@ -70,5 +70,18 @@ def init():
     p = requests.get (dsire)
     
     settings.politics = p.json
+    
+    
+    # --------------------------------------------------------------------------------------------------------------------------------
+    # ECONOMIC DATA - Genability - http://developer.genability.com/documentation/quickstart/
+    # --------------------------------------------------------------------------------------------------------------------------------
+
+    #Load Serving Entities (lses)
+    lses = "https://api.genability.com/rest/public/lses?zipCode={postal}".format(postal=postal)
+    
+    #auth = app_id, app_key
+    e = requests.get(lses, auth=("e2e2df06-6e87-43ab-b79e-30ca9a0aacdf" , "a074b728-a09e-436d-96b1-45e6bada965c"))
+
+    settings.economics = e.text
     
     return

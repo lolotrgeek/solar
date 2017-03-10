@@ -15,6 +15,7 @@ def init():
         g = geocoder.google(settings.inputlocation)
         settings.lat = g.lat
         settings.lon = g.lng
+        settings.postal = g.postal
         
         r = geocoder.google([g.lat, g.lng], method='reverse')
         settings.state = r.state
