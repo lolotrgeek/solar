@@ -1,12 +1,10 @@
-#main.py
-#Execute with front-end
+#headless.py
+#Headless execution
 
 #Program Layers
 import settings
 import present
 import data
-import html
 
 settings.init()
-
-
+present.init()

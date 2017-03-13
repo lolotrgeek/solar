@@ -8,10 +8,15 @@ import datetime
 import settings
 import data
 
+location = 'chicago'
+
 def init():
         
+        if location:
+            settings.location = location
+            
         #Geocode inputlocation
-        g = geocoder.google(settings.inputlocation)
+        g = geocoder.google(settings.location)
         settings.lat = g.lat
         settings.lon = g.lng
         settings.postal = g.postal
@@ -26,3 +31,10 @@ def init():
         
         #inject data layer
         data.init()
+        
+        print settings.location 
+        print settings.weather 
+        print settings.politics
+        print settings.economics
+        print settings.demographics
+        

@@ -8,6 +8,11 @@ import requests
 import json
 import sys, os
 
+#load data libraries
+from census import Census
+from us import states
+from censusgeocode import CensusGeocode
+
 #load layers
 import settings
 
@@ -65,8 +70,6 @@ def init():
 
     dsire = 'http://programs.dsireusa.org/api/v1/getprograms/json?fromSir=0&state={state}'.format(state=state)
     
-    print dsire
-    
     p = requests.get (dsire)
     
     settings.politics = p.json
@@ -109,6 +112,38 @@ def init():
     
     #request
     e = requests.get(eia)
-    settings.economics = e.text
+    settings.economics = e.json
+    
+     # --------------------------------------------------------------------------------------------------------------------------------
+    # DEMOGRAPHIC DATA - CENSUS - https://api.census.gov/data/2012/acs5/variables.html
+    # --------------------------------------------------------------------------------------------------------------------------------   
+    
+    #Census geocoder to get regional codes for the location
+    cg = CensusGeocode() 
+    
+    cg_results = cg.coordinates(x= lon, y= lat)
+    
+    #Census regional codes
+    state = cg_results[0]['Census Tracts'][0]['STATE']
+    county = cg_results[0]['Census Tracts'][0]['COUNTY']
+    tract = cg_results[0]['Census Tracts'][0]['TRACT']
+    
+    #Census instantiate with API Key
+    c = Census("fb10dd39ec721dda4caf2baf5eed40a57f724084")
+    
+    #Census variables
+    #Median Household Income by Household Size
+    size = 'B19019_001E'
+    
+    #Aggregate household income in the past 12 months (in 2012 inflation-adjusted dollars
+    agg = 'B19025_001E'
+    
+    #Age of Householder by Household Income
+    age = 'B19037_001E'
+    
+    #retrieve the census data
+    d = c.acs5.state_county_tract(('NAME', size), state, county, tract)
+    
+    settings.demographics = d
     
     return

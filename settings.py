@@ -2,7 +2,7 @@
 #define global variables
 def init():
 
-    global inputlocation
+    global location
     global lat
     global lon
     global state
@@ -13,4 +13,4 @@ def init():
     global weather
     global politics
     global economics
-    
+    global demograpics
