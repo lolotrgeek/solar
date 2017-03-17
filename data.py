@@ -35,7 +35,7 @@ def init():
     # Set the attributes to extract (e.g., dhi, ghi, etc.), separated by commas.
     attributes = 'ghi,dhi,dni,wind_speed_10m_nwp,surface_air_temperature_nwp,solar_zenith_angle'
     # Choose year of data
-    year = '2010'
+    year = '2015'
     # Set leap year to true or false. True will return leap day data if present, false will not.
     leap_year = 'false'
     # Set time interval in minutes, i.e., '30' is half hour intervals. Valid intervals are 30 & 60.
@@ -115,7 +115,7 @@ def init():
     settings.economics = e.json
     
      # --------------------------------------------------------------------------------------------------------------------------------
-    # DEMOGRAPHIC DATA - CENSUS - https://api.census.gov/data/2012/acs5/variables.html
+    # DEMOGRAPHIC DATA - CENSUS - https://api.census.gov/data/2015/acs5/variables.html
     # --------------------------------------------------------------------------------------------------------------------------------   
     
     #Census geocoder to get regional codes for the location
@@ -124,9 +124,9 @@ def init():
     cg_results = cg.coordinates(x= lon, y= lat)
     
     #Census regional codes
-    state = cg_results[0]['Census Tracts'][0]['STATE']
-    county = cg_results[0]['Census Tracts'][0]['COUNTY']
-    tract = cg_results[0]['Census Tracts'][0]['TRACT']
+    c_state = cg_results[0]['Census Tracts'][0]['STATE']
+    c_county = cg_results[0]['Census Tracts'][0]['COUNTY']
+    c_tract = cg_results[0]['Census Tracts'][0]['TRACT']
     
     #Census instantiate with API Key
     c = Census("fb10dd39ec721dda4caf2baf5eed40a57f724084")
@@ -135,14 +135,17 @@ def init():
     #Median Household Income by Household Size
     size = 'B19019_001E'
     
-    #Aggregate household income in the past 12 months (in 2012 inflation-adjusted dollars
+    #Aggregate household income in the past 12 months 
     agg = 'B19025_001E'
     
     #Age of Householder by Household Income
     age = 'B19037_001E'
     
+    #INCOME IN THE PAST 12 MONTHS 
+    income = 'B06011_001E'
+    
     #retrieve the census data
-    d = c.acs5.state_county_tract(('NAME', size), state, county, tract)
+    d = c.acs5.state_county_tract(('NAME', size), c_state, c_county, c_tract)
     
     settings.demographics = d
     
