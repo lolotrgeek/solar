@@ -61,8 +61,14 @@ def init():
     weather = pd.read_csv(nsrdb, nrows=1)
     # See metadata for specified properties, e.g., timezone and elevation
     timezone, elevation = weather['Local Time Zone'], weather['Elevation']
+
+    radiance = weather['Fill Flag 2']
+
+    sky = weather['Fill Flag 3']
     
     settings.weather = weather
+    settings.radiance = radiance
+    settings.sky = sky
         
     # --------------------------------------------------------------------------------------------------------------------------------
     # POLITICAL DATA - DSIRE - http://www.dsireusa.org/resources/data-and-tools/
@@ -70,9 +76,9 @@ def init():
 
     dsire = 'http://programs.dsireusa.org/api/v1/getprograms/json?fromSir=0&state={state}'.format(state=state)
     
-    p = requests.get (dsire)
+    polreq = requests.get (dsire)
     
-    settings.politics = p.json
+    settings.politics = polreq.json
     
     
     # --------------------------------------------------------------------------------------------------------------------------------

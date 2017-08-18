@@ -1,40 +1,38 @@
-#Present data
+# Present data
 
-#load dependencies
-import geocoder
+# load dependencies
 import datetime
+import geocoder
 
-#load layers
+# load layers
 import settings
 import data
 
-location = 'chicago'
+location = 'St. Louis, Mo'
 
 def init():
-        
-        if location:
-            settings.location = location
-            
-        #Geocode inputlocation
-        g = geocoder.google(settings.location)
-        settings.lat = g.lat
-        settings.lon = g.lng
-        settings.postal = g.postal
-        
-        r = geocoder.google([g.lat, g.lng], method='reverse')
-        settings.state = r.state
-        
-        #If year not input set to current year
-        #if not settings.year:
-          #  now = datetime.datetime.now()
-            #settings.year = now.year 
-        
-        #inject data layer
-        data.init()
-        
-        print settings.location 
-        print settings.weather 
-        print settings.politics
-        print settings.economics
-        print settings.demographics
+    if location:
+        settings.location = location
+    # Geocode inputlocation
+    g = geocoder.google(settings.location)
+    settings.lat = g.lat
+    settings.lon = g.lng
+    settings.postal = g.postal
+    # Reverse Geocode
+    reverse = geocoder.google([g.lat, g.lng], method='reverse')
+    settings.state = reverse.state
+    # If year not input set to current year
+    if not settings.year:
+        now = datetime.datetime.now()
+        settings.year = now.year
+    #inject data layer
+    data.init()
+    # Output variables
+    print settings.location
+    #print settings.weather
+    print settings.radiance
+    print settings.sky
+    print settings.politics
+    print settings.economics
+    print settings.demographics
         

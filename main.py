@@ -8,5 +8,3 @@ import data
 import html
 
 settings.init()
-
-

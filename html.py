@@ -31,7 +31,7 @@ class Handler(BaseHTTPRequestHandler):
     #Parse Response
     def do_POST(self):
         form = cgi.FieldStorage(
-            fp=self.rfile, 
+            fp=self.rfile,
             headers=self.headers,
             environ={'REQUEST_METHOD':'POST',
                      'CONTENT_TYPE':self.headers['Content-Type'],
@@ -40,7 +40,7 @@ class Handler(BaseHTTPRequestHandler):
         inputlocation = form.getvalue("location")
         
         settings.location = inputlocation
-		
+
         #inject presentation layer
         present.init()
         

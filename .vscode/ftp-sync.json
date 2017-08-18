@@ -1,0 +1,24 @@
+{
+    "remotePath": "./solar",
+    "host": "192.168.1.107",
+    "username": "notadmin",
+    "password": "doyoubelieveinlifeafterlove",
+    "port": 24,
+    "secure": false,
+    "protocol": "sftp",
+    "uploadOnSave": true,
+    "passive": false,
+    "debug": false,
+    "privateKeyPath": null,
+    "passphrase": null,
+    "ignore": [
+        "\\.vscode",
+        "\\.git",
+        "\\.DS_Store"
+    ],
+    "generatedFiles": {
+        "uploadOnSave": false,
+        "extensionsToInclude": [],
+        "path": ""
+    }
+}
