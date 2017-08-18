@@ -9,6 +9,7 @@ import settings
 import data
 
 location = 'St. Louis, Mo'
+settings.year = '2015'
 
 def init():
     if location:

@@ -23,7 +23,7 @@ def init():
     lon = settings.lon
     state = settings.state
     postal = settings.postal
-    #year = settings.year
+    year = settings.year
     
     # --------------------------------------------------------------------------------------------------------------------------------
     # WEATHER DATA - NSRDB  - https://nsrdb.nrel.gov/api-instructions
@@ -35,7 +35,7 @@ def init():
     # Set the attributes to extract (e.g., dhi, ghi, etc.), separated by commas.
     attributes = 'ghi,dhi,dni,wind_speed_10m_nwp,surface_air_temperature_nwp,solar_zenith_angle'
     # Choose year of data
-    year = '2015'
+    #year = '2015'
     # Set leap year to true or false. True will return leap day data if present, false will not.
     leap_year = 'false'
     # Set time interval in minutes, i.e., '30' is half hour intervals. Valid intervals are 30 & 60.
